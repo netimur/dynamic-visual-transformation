@@ -33,3 +33,26 @@ fun PhoneInput(modifier: Modifier = Modifier) {
     )
 }
 ```
+
+# DynamicVisualTransformation
+
+[![](https://jitpack.io/v/netimur/DynamicVisualTransformation.svg)](https://jitpack.io/#netimur/DynamicVisualTransformation)
+
+## How to add the library
+
+### Step 1. Add JitPack repository
+Add the following in your `settings.gradle.kts` at the end of the `repositories` block:
+
+```kotlin
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+
+### Step 2. Add dependenct
+dependencies {
+    implementation("com.github.netimur:DynamicVisualTransformation:Tag")
+}
