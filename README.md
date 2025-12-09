@@ -8,8 +8,7 @@ Handles cursor offset mapping automatically.
 Ideal for phone numbers, dates, credit cards, or any custom formatted input.
 
 #### Example
-<img src="https://github.com/user-attachments/assets/7f4cd04a-87e9-4344-bce8-cb196e693315" alt="DynamicVisualTransformation" width="400" height="300">
-
+<img src="https://github.com/user-attachments/assets/7f4cd04a-87e9-4344-bce8-cb196e693315" alt="DynamicVisualTransformation" style="width:50%; height:auto;">
 
 #### Usage
 ##### PhoneNumber input example
