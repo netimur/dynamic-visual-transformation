@@ -51,8 +51,11 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
     }
 }
+```
 
-### Step 2. Add dependenct
+### Step 2. Add dependency
+```
 dependencies {
     implementation("com.github.netimur:DynamicVisualTransformation:Tag")
 }
+```
