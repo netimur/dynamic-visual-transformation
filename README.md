@@ -1,47 +1,23 @@
 ### DynamicVisualTransformation
-**DynamicVisualTransformation** is a lightweight Kotlin library for Jetpack Compose that allows you to create dynamic input masks and visually transform text in ```TextFields```. It supports custom templates, placeholders, and styling for unfilled characters, making user input more structured and user-friendly.
-Features
-Apply dynamic visual transformations to TextFields in Jetpack Compose.
-Define custom templates using a template symbol.
-Show placeholders for unfilled input with optional coloring.
-Handles cursor offset mapping automatically.
-Ideal for phone numbers, dates, credit cards, or any custom formatted input.
+A lightweight Kotlin library for Jetpack Compose that applies dynamic input masks and visual text transformations to `TextField`s. It supports custom templates, placeholders, and styling for unfilled characters, making user input more structured and user‑friendly.
 
-#### Example
-<img src="https://github.com/user-attachments/assets/7f4cd04a-87e9-4344-bce8-cb196e693315" alt="DynamicVisualTransformation" style="width:50%; height:auto;">
+- Works great for phone numbers, dates, credit cards, postal codes, and other formatted inputs
+- Customizable template symbols and placeholders
+- Automatic cursor/offset mapping so caret position feels natural while typing
+- Simple, Compose‑first API
 
-#### Usage
-##### PhoneNumber input example
-``` kotlin
-@Composable
-fun PhoneInput(modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+---
 
-    val phoneVisualTransformation = remember {
-        DynamicVisualTransformation(
-            template = "+7(%%%) %%%-%%-%%",
-            templateSymbol = '%',
-            placeholder = DynamicPlaceholder("+7(   )    -  -  ")
-        )
-    }
+### Demo
+<img src="https://github.com/user-attachments/assets/7f4cd04a-87e9-4344-bce8-cb196e693315" alt="DynamicVisualTransformation" style="width:30%; height:auto;">
 
-    TextField(
-        value = text,
-        modifier = modifier,
-        onValueChange = { text = it },
-        visualTransformation = phoneVisualTransformation
-    )
-}
-```
+---
 
-# DynamicVisualTransformation
-
+### Installation
 [![](https://jitpack.io/v/netimur/DynamicVisualTransformation.svg)](https://jitpack.io/#netimur/DynamicVisualTransformation)
 
-## How to add the library
-
-### Step 1. Add JitPack repository
-Add the following in your `settings.gradle.kts` at the end of the `repositories` block:
+#### 1) Add JitPack repository
+Add the following to your `settings.gradle.kts` inside the `dependencyResolutionManagement` block:
 
 ```kotlin
 dependencyResolutionManagement {
@@ -53,9 +29,125 @@ dependencyResolutionManagement {
 }
 ```
 
-### Step 2. Add dependency
-```
+#### 2) Add the dependency
+Replace `Tag` with the latest version from the badge above.
+
+```kotlin
 dependencies {
     implementation("com.github.netimur:DynamicVisualTransformation:Tag")
 }
 ```
+
+---
+
+### Quick start
+```kotlin
+@Composable
+fun PhoneInput(modifier: Modifier = Modifier) {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+
+    val phoneVisualTransformation = remember {
+        DynamicVisualTransformation(
+            template = "+7(%%%) %%%-%%-%%",
+            templateSymbol = '%',
+            placeholder = DynamicPlaceholder(
+                text = "+7(   )    -  -  "
+            )
+        )
+    }
+
+    TextField(
+        value = text,
+        onValueChange = { text = it },
+        modifier = modifier,
+        visualTransformation = phoneVisualTransformation
+    )
+}
+```
+
+What it does:
+- Uses `template` to define where user characters go (`%` marks input positions)
+- Displays a `placeholder` for remaining positions
+- Automatically keeps the cursor in the expected spot while typing or deleting
+
+---
+
+### Concepts
+- `template`: A mask string that mixes static characters with input slots.
+  - Example: `"#### #### #### ####"` with `templateSymbol = '#'` for credit cards.
+- `templateSymbol`: The character in `template` that represents an input slot.
+- `placeholder`: Optional visual hint for unfilled input (can be plain text or styled).
+
+---
+
+### More examples
+
+#### Credit card
+```kotlin
+val cardMask = remember {
+    DynamicVisualTransformation(
+        template = "#### #### #### ####",
+        templateSymbol = '#',
+        placeholder = DynamicPlaceholder("____ ____ ____ ____")
+    )
+}
+```
+
+#### Date (MM/YY)
+```kotlin
+val dateMask = remember {
+    DynamicVisualTransformation(
+        template = "%%/%%",
+        templateSymbol = '%',
+        placeholder = DynamicPlaceholder("MM/YY")
+    )
+}
+```
+
+#### Custom placeholder styling (optional)
+If `DynamicPlaceholder` supports styling (e.g., color or span style), you can provide it. Example shape:
+```kotlin
+val styled = remember {
+    DynamicVisualTransformation(
+        template = "+1 (%%%) %%%-%%%%",
+        templateSymbol = '%',
+        placeholder = DynamicPlaceholder(
+            text = "+1 (   )    -    ",
+            // e.g., color = Color.Gray, style = SpanStyle(...)
+        )
+    )
+}
+```
+
+---
+
+### Tips and best practices
+- Keep the number of `templateSymbol` occurrences equal to the maximum expected input length.
+- Validate raw input separately (e.g., strip non‑digits if needed) before submission.
+- Use `remember` to avoid recreating the transformation on every recomposition.
+- Test deletion and mid‑string edits—offset mapping is handled automatically, but your own `onValueChange` logic should remain simple.
+
+---
+
+### API overview (simplified)
+- `DynamicVisualTransformation(
+    template: String,
+    templateSymbol: Char,
+    placeholder: DynamicPlaceholder? = null
+)`
+- `DynamicPlaceholder(
+    text: String /* plus optional styling parameters if available */
+)`
+
+Result can be passed to `TextField` or `OutlinedTextField` via `visualTransformation`.
+
+---
+
+### Compatibility
+- Language: Kotlin
+- UI: Jetpack Compose (`TextField` / `OutlinedTextField`)
+
+---
+
+### License
+This library is distributed under the terms of its repository license. See the project’s `LICENSE` file for details.
