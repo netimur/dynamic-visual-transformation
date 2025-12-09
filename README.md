@@ -7,6 +7,9 @@ Show placeholders for unfilled input with optional coloring.
 Handles cursor offset mapping automatically.
 Ideal for phone numbers, dates, credit cards, or any custom formatted input.
 
+#### Example
+![Example preview](https://github.com/user-attachments/assets/7f4cd04a-87e9-4344-bce8-cb196e693315)
+
 #### Usage
 ##### PhoneNumber input example
 ``` kotlin
