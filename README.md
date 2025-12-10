@@ -34,7 +34,7 @@ Replace `Tag` with the latest version from the badge above.
 
 ```kotlin
 dependencies {
-    implementation("com.github.netimur:DynamicVisualTransformation:Tag")
+    implementation("com.github.netimur:dynamic-visual-transformation:Tag")
 }
 ```
 
